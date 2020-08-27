@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.lti.dto.ReportDto;
 import com.lti.entity.Report;
+import com.lti.entity.Student;
 
 public interface ReportRepository {
 	
@@ -16,6 +17,7 @@ public interface ReportRepository {
 	List<ReportDto> fetchReportBySubjectlevel(int subjectLevel);
 	List<ReportDto> fetchReportByState(String state);   
 	List<ReportDto> fetchReportByCity(String city);
+	List<Report> getResultsOfaStudent(Student student);
 	
 	List<ReportDto> fetchReportByMarks(int marks);  
 	

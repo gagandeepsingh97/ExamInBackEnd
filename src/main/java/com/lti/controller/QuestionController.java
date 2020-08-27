@@ -15,6 +15,7 @@ import com.lti.dto.QuestionHandle;
 import com.lti.dto.ResponseModel;
 import com.lti.entity.Question;
 import com.lti.service.QuestionService;
+import com.lti.service.ReportService;
 
 @CrossOrigin(origins = "http://localhost:4200")
 
@@ -23,6 +24,9 @@ public class QuestionController {
 
 	@Autowired
 	private QuestionService questionService;
+	
+	@Autowired
+	ReportService reportService;
 	
     @PostMapping(path="/getQuestion")//consumes ="application/json", produces="application/json")
     public List<QuestionHandle> getQuestion(@RequestBody int subjectId) {
@@ -45,14 +49,15 @@ public class QuestionController {
     	return rsList; 
     }
     
-    
     @PostMapping(path="/saveAnswer")//, consumes ="application/json", produces="application/json")
-    public void saveAnswer(@RequestBody ResponseModel responseModel) { // 1 2 3 4 1 2 3 4 1 2
+    public List<Integer> saveAnswer(@RequestBody ResponseModel responseModel) { // 1 2 3 4 1 2 3 4 1 2
     	System.out.println(responseModel.getAnswes()[0]);
     	System.out.println(responseModel.getCredentials()[1]);
 //    	for(int i = 0; i < 10; i++) {
 //    	System.out.println(responses[i]);
 //    	}
+    	
+
     	List<Integer> r = new ArrayList();
     	for(int i=0; i < responseModel.getAnswes().length; i++)
     	{
@@ -60,9 +65,25 @@ public class QuestionController {
     	}
     	int s1 = Integer.parseInt(responseModel.getCredentials()[0]);
     	int s2 = Integer.parseInt(responseModel.getCredentials()[1]);
+    	
+
+    	for(int i = 0; i<responseModel.getAnswes().length; i++) {
+    		System.out.println("i" + responseModel.getAnswes()[i]+ " ");
+    		System.out.println("r" + r.get(i));
+    	}
+    	System.out.println("s1" + s1);
+    	System.out.println("s2" + s2);
     	questionService.saveAnswerService(s1, s2, r);
-    }
+    	int i = reportService.calulateMarksService(s1, s2 );
+    	System.out.println("marks" + i);
+    	List<Integer> sendMarks = new ArrayList<>();
+    	sendMarks.add(i);
+    	return sendMarks;
+    	   }
+    	
 //    public void updateOptionsOfStudent(int studentId, int subjectId) {
 //    	 
 //    }
+    
+    
 }

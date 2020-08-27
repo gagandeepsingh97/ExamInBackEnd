@@ -21,11 +21,11 @@ public class QuestionRepositoryImpl implements QuestionRepository{
 
 	@PersistenceContext
 	private EntityManager entityManager;
-	
 //	public int getSubjectIdFromNameAndLevel(int subjectName, int subjectLevel){
 //		
 //		return 1;
 //	}
+	
 	@Override
 	public List<Question> getQuestionBySubjectId(int subjectId){
 	        String sql = "select ques from Question ques where subject.subjectId = :sub";

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.lti.dto.ReportDto;
+import com.lti.entity.Report;
 import com.lti.entity.Student;
 import com.lti.repository.ReportRepository;
 import com.lti.repository.StudentRepository;
@@ -22,11 +23,42 @@ public class ReportServiceImpl implements ReportService {
 	@Autowired
 	ReportRepository reportRepository;
 	
+	@Autowired 
+	StudentRepository studentRepository;
+	
+	
 	public int calulateMarksService(int studentId, int subjectId) {
 		int i = reportRepository.calulateMarks(studentId, subjectId);
 		System.out.println("controller -> "+studentId + " "+ subjectId);
 		return i;
 	} 
+
+
+
+@Override
+public List<ReportDto> getReportOfAStudent(int studentId)
+{
+	Student student = studentRepository.findById(studentId); //studentrepo
+	
+	List<Report> reportList =  reportRepository.getResultsOfaStudent(student); 
+	List<ReportDto> reportDtoList = new ArrayList<>();
+	for(Report res: reportList) 
+	{
+		ReportDto resDto = new ReportDto();
+		
+		//resDto.setReportId(res.getReportId());
+		resDto.setResultId(res.getReportId());
+		resDto.setName(res.getStudent().getName());
+		resDto.setSubjectName(res.getSubject().getSubjectName());
+		resDto.setMarks(res.getMarks());
+		resDto.setSubjectLevel(res.getSubject().getSubjectLevel());
+		resDto.setTotalMarks(100);
+		
+		reportDtoList.add(resDto);
+
+	}
+	return reportDtoList;
+}
 }
 	
 //	getLevel

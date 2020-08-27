@@ -111,9 +111,10 @@ public class ReportRepositoryImpl implements ReportRepository {
 		vq.setParameter(3, studentId);
 		List<BigDecimal> vSelectedOptions = vq.getResultList();
 		System.out.println(vSelectedOptions.size() +" size "+ vRids.size() );
-		for(int i = 0; i < vSelectedOptions.size(); i++)
+		for(int i = 0; i < 10; i++)
 		{
 			if(Integer.parseInt(vCorrectOptions.get(i))==vSelectedOptions.get(i).intValue()) vTotalMarks += 10;
+			System.out.println(vCorrectOptions.get(i) +" "+ vSelectedOptions.get(i).intValue());
 		}
 		
 		
@@ -224,6 +225,15 @@ public class ReportRepositoryImpl implements ReportRepository {
         ReportDto report = (ReportDto)qry.getSingleResult();
         return (List<ReportDto>) report;
 	}
+ 	@Override
+	public List<Report> getResultsOfaStudent(Student student) {
+			String sql = " from Report r where r.student= :stu";
+			TypedQuery<Report> qry = entityManager.createQuery(sql, Report.class);
+			qry.setParameter("stu", student);
+			List<Report> resultList = qry.getResultList();
+			return resultList;
+		}
+	
  	
 }
 	

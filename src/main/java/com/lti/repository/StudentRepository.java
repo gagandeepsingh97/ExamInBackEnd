@@ -15,5 +15,10 @@ public interface StudentRepository {
 	int findByEmailPassword(String email, String password);
 	
 	boolean StudentPresent(String email);
+	
+	List<Student> findStudentbySub(String subjectName);
+	List<Student> findStudentbyCity(String city);
+	List<Student> findStudentbyState(String state);
+	List<Student> findStudentbyMarks(int marks);
 
 }

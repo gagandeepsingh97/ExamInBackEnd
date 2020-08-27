@@ -1,6 +1,8 @@
 package com.lti.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.controller.StudentController.Status.StatusType;
 import com.lti.dto.LoginDto;
+import com.lti.dto.StudentDto;
 import com.lti.entity.Student;
 import com.lti.exception.StudentServiceException;
 import com.lti.service.StudentService;
@@ -28,7 +31,7 @@ public class StudentController {
             studentService.register(student);
             Status status = new Status();
             status.setStatus(StatusType.SUCCESS);
-            status.setMessage("Registration Successfull");
+            status.setMessage("Registration Successful");
             return status;
         }
         catch(StudentServiceException e) {
@@ -37,6 +40,7 @@ public class StudentController {
             status.setMessage(e.getMessage());
             return status;
         }
+        
         
     }
     
@@ -119,7 +123,40 @@ public class StudentController {
             this.message = message;
         }
         
-        
+    }
+    @PostMapping("/searchStudentByCity")
+    public List<StudentDto> searchStudentbyCity(@RequestBody String city)
+    {
+    	
+    	List<StudentDto> student= studentService.searchStudentbyCity(city);
+    	return student;
+    }
+    
+    @PostMapping("/searchStudentByState")
+    public List<StudentDto> searchStudentbyState(@RequestBody String state)
+    {
+    	
+    	List<StudentDto> student= studentService.searchStudentbyState(state);
+    	return student;
+    	
+    	
+    }
+    
+    @PostMapping("/searchStudentByMarks")
+    public List<StudentDto> searchStudentbyMarks(@RequestBody int marks)
+    {
+    	
+    	List<StudentDto> student= studentService.searchStudentbyMarks(marks);
+    	return student;
+    	
+    	
+    }
+    
+    @PostMapping("/searchStudentBySub")
+    public List<StudentDto> searchStudentbySub(@RequestBody String subjectName)
+    {
+    	List<StudentDto> student= studentService.searchStudentbySub(subjectName);
+    	return student;
     }
     
 }
