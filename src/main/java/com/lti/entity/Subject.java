@@ -1,5 +1,7 @@
 package com.lti.entity;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,11 +26,10 @@ public class Subject {
         private String subjectName;
         
         @Column(name="SUBLEVEL", length = 10)
-        private String subjectLevel;
+        private int subjectLevel;
 
  
-
-        @OneToMany
+        @OneToMany(cascade= CascadeType.ALL)
         //MAPPED BY MEANS TAKEN THE RIGHT AWAY FROM ANSWERS AND GIVEN TO QUESTION FIELD IN ANSWER.JAVA CLASS
         private Set<Question> question;
         
@@ -61,13 +62,13 @@ public class Subject {
 
  
 
-        public String getSubjectLevel() {
+        public int getSubjectLevel() {
             return subjectLevel;
         }
 
  
 
-        public void setSubjectLevel(String subjectLevel) {
+        public void setSubjectLevel(int subjectLevel) {
             this.subjectLevel = subjectLevel;
         }
 
@@ -97,7 +98,7 @@ public class Subject {
 
  
 
-        public Subject(int subjectId, String subjectName, String subjectLevel, Set<Question> question,
+        public Subject(int subjectId, String subjectName, int subjectLevel, Set<Question> question,
                 Set<Report> report) {
             super();
             this.subjectId = subjectId;

@@ -21,7 +21,7 @@ public class Admin {
 	@Column(name="ANAME",length=20)
 	private String adminName;
 	
-	@Column(name="AEMAIL",length=30)
+	@Column(name="AEMAIL",length=50)
 	private String adminEmail;
 	
 	@Column(name="APHONE",length=10)

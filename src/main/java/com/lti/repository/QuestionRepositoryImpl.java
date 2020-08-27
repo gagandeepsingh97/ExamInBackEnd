@@ -1,18 +1,19 @@
 package com.lti.repository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+
 import com.lti.entity.Question;
+import com.lti.entity.Report;
+import com.lti.entity.Response;
+import com.lti.entity.Student;
 import com.lti.entity.Subject;
 
 @Repository
@@ -32,12 +33,106 @@ public class QuestionRepositoryImpl implements QuestionRepository{
 	        qry.setParameter("sub", subjectId);
 	        List<Question> questions = qry.getResultList();
 	        return questions;
+//	        
+//		Subject subject = this.entityManager.find(Subject.class,subjectId);
+//		
+//		String q1 = "from Question where subject =: x";
+//		Query qqq = this.entityManager.createQuery(q1).setParameter("x",subject);
+//		List<Question> questions = (List<Question>)qqq.getResultList();
+	        
+//	        String sql = "select ques from Question ques where subject.subjectId = :sub";
+//	        TypedQuery<Question> qry = entityManager.createQuery(sql, Question.class);
+//	        qry.setParameter("sub", subjectId);
+//	        List<Question> questions = qry.getResultList();
+//	        return questions;
+
 
 //		List<Question> questionList= entityManager.createQuery("select q from Question q where q.subjectId=:subId").
 //				setParameter("subId",subjectId).
 //				getResultList();
 //		return questionList;
 		
+	}
+	
+	
+	@Override
+	@Transactional
+	public void saveAnswerRepo(int sid, int subid, List<Integer> responsesList) {
+		
+//		insert query 
+		
+		System.out.println("Response List" + responsesList.size());
+		Student student = this.entityManager.find(Student.class,sid);
+		Subject subject = this.entityManager.find(Subject.class,subid);
+		String q1 = "from Question where subject =: x";
+		Query qqq = this.entityManager.createQuery(q1).setParameter("x",subject);
+		List<Question> questions = (List<Question>)qqq.getResultList();
+		
+		Report report = new Report();
+		report.setStudent(student);
+		report.setPassingStatus(false);
+		report.setSubject(subject);
+		report.setnAttempt(1);
+		report.setMarks(0);
+		this.entityManager.merge(report);
+//		this.entityManager.persist(report);
+		
+		String q2 = "from Report where subject=: x AND student =: y";
+		Query query = this.entityManager.createQuery(q2).setParameter("x",subject).setParameter("y",student);
+		List<Report> report1 = (List<Report>) query.getResultList();
+		
+		System.out.println("QuestionSize:" + questions.size());
+		for(int i = 0; i < 10; i++)
+		{	
+		Response response = new Response();
+		response.setReport(report1.get(0));
+		response.setStudent(student); //object
+		response.setQuestion(questions.get(i));
+		response.setSelectedOption(responsesList.get(i));
+		
+		this.entityManager.merge(response);
+		}
+		System.out.println("Saved!");
+		
+		
+//		Subject subject = entityManager.find(Subject.class,subjectId);
+//		Student student = entityManager.find(Student.class,studentId);
+//		Report dummyReport = new Report();
+//		
+//		dummyReport.setnAttempt(0);
+//		dummyReport.setMarks(0);
+//		dummyReport.setPassingStatus(false);
+//		dummyReport.setStudent(student);
+//		dummyReport.setSubject(subject);
+//		
+//		
+//		
+//		entityManager.persist(student);
+////		String prevMaxRid = " SELECT MAX(RID) FROM REPORT ";
+////        int finalPrevMaxRid = (Integer) this.entityManager.createQuery(prevMaxRid).getSingleResult();
+//        String sql = "INSERT INTO REPORT( RID, SID, SUBID, ATTEMPTNO, MARKS, STATUS) VALUES(?, 0, 0, 0, 0, 0)";
+//
+//        Query insertQuery = this.entityManager.createQuery(sql);
+//        int finalRid = finalPrevMaxRid + 1;
+//        insertQuery.setParameter(0, finalRid);
+//        insertQuery.setParameter(1, studentId);
+//        insertQuery.setParameter(2, subjectId); 
+//        insertQuery.setParameter(3, 1); ///   attempt no????
+//        insertQuery.setParameter(4, 0);
+//        insertQuery.setParameter(5, 0);
+//        insertQuery.executeUpdate();
+//        String maxResponseid = " SELECT MAX(RID) FROM REPORT ";
+//        int responseId = (Integer) this.entityManager.createQuery(maxResponseid).getSingleResult();
+//
+//       return responseId;
+//		String sql = "insert into Report(studentId, subjectId, attemptNo, marks, status) values (0, 0, 0, 0, 0)";
+//		 UPDATE RESPONSE SET SELECTED_OPTION = 2
+//			     WHERE RESPONSE.QUESID = (
+//			             SELECT QUESID FROM QUESTION
+//			             WHERE SUBJECTID = 1
+//			             AND QUESTIONNUMBER = 1 )
+//			     AND RID = 1
+//			     AND SID = 1;
 	}
 }
 //		System.out.println("line 1 ");
@@ -60,7 +155,6 @@ public class QuestionRepositoryImpl implements QuestionRepository{
 //
 //}
 //		
-		
 		
 		
 		

@@ -23,8 +23,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name="QUESTION")
 public class Question {
     @Id
-    @GeneratedValue()
-    @Column(name="QUESID", length = 10)
+    @GeneratedValue
+    @Column(name="QUESID")
     private int questionId; // sir said we cant keep string :(
     
 //    @Transient

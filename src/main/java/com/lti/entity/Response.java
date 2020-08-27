@@ -15,7 +15,7 @@ import javax.persistence.Column;
 public class Response {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="RESID",length=20)
+    @Column(name="RESID")
     private int responseId;
     
     

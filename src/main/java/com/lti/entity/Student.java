@@ -1,43 +1,29 @@
 package com.lti.entity;
 
- 
-
-
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
-
- 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
- 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-
- 
-
 import javax.persistence.OneToMany;
 
  
-
 @Entity
 @Table(name="STUDENT")
 public class Student {
 
- 
 
     @Id
     @GeneratedValue
-    @Column(name="SID", length = 10)
+    @Column(name="SID")
     private int studentId;
     @Column(name="SNAME", length=20)
     private String name;
-    @Column(name="SEMAIL", length=30)
+    @Column(name="SEMAIL", length=50)
     private String email;
     @Column(name="SPASS", length=20)
     private String password;
@@ -53,7 +39,7 @@ public class Student {
     @Column(name="SQUALIFICATION", length = 20)
     private String qualification;
     @Column(name="SCOMPLETIONYEAR", length = 4)
-    private String yearCompletion;
+    private int yearCompletion;
     
     @OneToMany(mappedBy="student")
     private Set<Report> report;
@@ -61,13 +47,9 @@ public class Student {
     @OneToMany(mappedBy="student")
     private Set<Response> response;
 
- 
-
     public int getStudentId() {
         return studentId;
     }
-
- 
 
     public void setStudentId(int studentId) {
         this.studentId = studentId;
@@ -160,13 +142,13 @@ public class Student {
 
  
 
-    public String getYearCompletion() {
+    public int getYearCompletion() {
         return yearCompletion;
     }
 
  
 
-    public void setYearCompletion(String yearCompletion) {
+    public void setYearCompletion(int yearCompletion) {
         this.yearCompletion = yearCompletion;
     }
 
@@ -199,7 +181,7 @@ public class Student {
  
 
     public Student(int studentId, String name, String email, String password, String phoneNo, LocalDate dob,
-            String city, String state, String qualification, String yearCompletion, Set<Report> report,
+            String city, String state, String qualification, int yearCompletion, Set<Report> report,
             Set<Response> response) {
         super();
         this.studentId = studentId;
@@ -235,12 +217,5 @@ public class Student {
         // TODO Auto-generated constructor stub
     }
 
- 
-
-    
-    
-    
-
- 
 
 }

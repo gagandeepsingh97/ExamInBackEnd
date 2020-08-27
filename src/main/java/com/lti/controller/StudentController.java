@@ -15,15 +15,14 @@ import com.lti.exception.StudentServiceException;
 import com.lti.service.StudentService;
 
 
-
-@CrossOrigin(origins = "http://localhost:4200/register")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class StudentController {
     
     @Autowired
     private StudentService studentService;
     
-    @PostMapping("/register")
+    @PostMapping("/registration")
     public Status register(@RequestBody Student student) {
         try {
             studentService.register(student);

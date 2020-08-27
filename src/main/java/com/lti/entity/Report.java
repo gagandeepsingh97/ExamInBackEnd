@@ -1,6 +1,6 @@
 package com.lti.entity;
 
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,17 +14,17 @@ import javax.persistence.OneToMany;
 @Table(name="REPORT")
 public class Report {
 
- 
-
     @Id
     @GeneratedValue
     @Column(name="RID",length=20)
     private int reportId;
     @Column(name="ATTEMPTNO",length=20)
-    private String nAttempt;
+    private int nAttempt;
+  //private String nAttempt;
     @Column(name="MARKS",length=20)
-    private String marks;
-    @Column(name="STATUS",length=20)
+    private int marks;
+    //private String marks;
+    @Column(name="STATUS",length=1)
     private boolean passingStatus;
     
     @ManyToOne
@@ -36,7 +36,7 @@ public class Report {
     private Subject subject;
     
     @OneToMany(mappedBy = "report")
-    private Set<Response>response;
+    private List<Response> response;
 
  
 
@@ -52,25 +52,25 @@ public class Report {
 
  
 
-    public String getnAttempt() {
+    public int getnAttempt() {
         return nAttempt;
     }
 
  
 
-    public void setnAttempt(String nAttempt) {
+    public void setnAttempt(int nAttempt) {
         this.nAttempt = nAttempt;
     }
 
  
 
-    public String getMarks() {
+    public int getMarks() {
         return marks;
     }
 
  
 
-    public void setMarks(String marks) {
+    public void setMarks(int marks) {
         this.marks = marks;
     }
 
@@ -112,20 +112,20 @@ public class Report {
 
  
 
-    public Set<Response> getResponse() {
+    public List<Response> getResponse() {
         return response;
     }
 
  
 
-    public void setResponse(Set<Response> response) {
+    public void setResponse(List<Response> response) {
         this.response = response;
     }
 
  
 
-    public Report(int reportId, String nAttempt, String marks, boolean passingStatus, Student student, Subject subject,
-            Set<Response> response) {
+    public Report(int reportId, int nAttempt, int marks, boolean passingStatus, Student student, Subject subject,
+            List<Response> response) {
         super();
         this.reportId = reportId;
         this.nAttempt = nAttempt;
@@ -142,11 +142,5 @@ public class Report {
         super();
         // TODO Auto-generated constructor stub
     }
-    
-    
-
- 
-
-    
     
 }

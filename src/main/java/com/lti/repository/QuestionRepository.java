@@ -9,6 +9,6 @@ public interface QuestionRepository {
 
 //	int getSubjectIdFromNameAndLevel(int subjectName, int subjectLevel);
 	List<Question> getQuestionBySubjectId(int subjectId);
-	
+	void saveAnswerRepo(int studentId, int subjectId, List<Integer> responsesList);
 
 }

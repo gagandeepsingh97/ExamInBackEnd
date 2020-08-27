@@ -22,9 +22,10 @@ public class QuestionServiceImpl implements QuestionService{
 		return questionRepository.getQuestionBySubjectId(subjectId);
 	}
 	
-	
-
-
+	@Override
+	public void saveAnswerService(int studentId, int subjectId, List<Integer> responses) {
+		questionRepository.saveAnswerRepo(studentId, subjectId, responses);
+	}
 }	
 	
 	

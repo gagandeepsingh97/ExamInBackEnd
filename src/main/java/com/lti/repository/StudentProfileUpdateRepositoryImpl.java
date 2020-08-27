@@ -40,8 +40,6 @@ public class StudentProfileUpdateRepositoryImpl implements StudentProfileUpdateR
 		return null;
 	}
 
-
-
 	@Override
 	public String updateState(int id, String state) {
 		// TODO Auto-generated method stub

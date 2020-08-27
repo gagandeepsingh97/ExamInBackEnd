@@ -6,6 +6,6 @@ import com.lti.dto.ReportDto;
 
 public interface ReportService {
 
-	List<ReportDto> getReport(int studentId);  
-		
+//	List<ReportDto> getReport(int studentId);  
+	int calulateMarksService(int studentId, int subjectId);	
 }
