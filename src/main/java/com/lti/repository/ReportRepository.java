@@ -13,6 +13,8 @@ public interface ReportRepository {
 	int calulateMarks(int studentId, int subjectId);
 	List<ReportDto> fetchReportByStudentId(int studentId);  
 	
+	void saveSelectedOptionInReportTable(int studentId, int subjectId, int marks);
+	
 	List<ReportDto> fetchReportBySubjectName(String subjectName);  
 	List<ReportDto> fetchReportBySubjectlevel(int subjectLevel);
 	List<ReportDto> fetchReportByState(String state);   

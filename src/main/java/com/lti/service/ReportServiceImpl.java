@@ -26,6 +26,10 @@ public class ReportServiceImpl implements ReportService {
 	@Autowired 
 	StudentRepository studentRepository;
 	
+	public void storeCalculatedMarks(int studentId, int subjectId, int marks) {
+		reportRepository.saveSelectedOptionInReportTable(studentId, subjectId, marks);
+	}
+	
 	
 	public int calulateMarksService(int studentId, int subjectId) {
 		int i = reportRepository.calulateMarks(studentId, subjectId);

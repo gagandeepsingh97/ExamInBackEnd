@@ -64,8 +64,10 @@ public class StudentRepositoryImpl implements StudentRepository {
 		public List<Student> findStudentbySub(String subjectName) 
 		{
 			return (List<Student>) entityManager
-			 .createQuery("from Student where studentId IN(from Report where SUBID IN (from Subject s  where s.subjectName=:sub))")
-			 .setParameter("sub", subjectName)
+			 .createNativeQuery("select * from Student where studentId IN"
+			 		+ "(select sid from Report where SUBID IN "
+			 		+ "(select subid from Subject s  where s.subName=?))")
+			 .setParameter(1, subjectName)
 			 .getResultList();
 
 			
@@ -102,11 +104,8 @@ public class StudentRepositoryImpl implements StudentRepository {
 		{
 			System.out.println(marks);
 			return (List<Student>) entityManager
-					.createQuery(" from Student where studentId IN(from Report where marks=:m)")
-					.setParameter("m", marks)
+					.createNativeQuery("select s.* from Student s where sid IN(select sid from Report r where marks= ?)")
+					.setParameter(1, marks)
 					.getResultList();
 		}
-		
-		
-
 }

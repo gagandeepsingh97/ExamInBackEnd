@@ -75,15 +75,16 @@ public class QuestionController {
     	System.out.println("s2" + s2);
     	questionService.saveAnswerService(s1, s2, r);
     	int i = reportService.calulateMarksService(s1, s2 );
+    	
+    	
+    	
     	System.out.println("marks" + i);
     	List<Integer> sendMarks = new ArrayList<>();
     	sendMarks.add(i);
+    	
+    	reportService.storeCalculatedMarks(s1, s2, sendMarks.get(0));
+    	
     	return sendMarks;
     	   }
     	
-//    public void updateOptionsOfStudent(int studentId, int subjectId) {
-//    	 
-//    }
-    
-    
 }

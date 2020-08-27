@@ -27,6 +27,17 @@ public class ReportRepositoryImpl implements ReportRepository {
 	
 	@Override
 	@Transactional
+	public void saveSelectedOptionInReportTable(int studentId, int subjectId, int marks) {
+		String q = "UPDATE REPORT SET MARKS = ? WHERE SID =?  AND SUBID = ?";
+		Query q1 = (Query)this.entityManager.createNativeQuery(q);
+		q1.setParameter(1, marks);
+		q1.setParameter(2, studentId);
+		q1.setParameter(3, subjectId);
+		q1.executeUpdate();
+	}
+	
+	@Override
+	@Transactional
 	public int calulateMarks(int studentId, int subjectId) {
 		System.out.println(studentId + " 1 "+ subjectId);
 		int reportIdNum = 1;
